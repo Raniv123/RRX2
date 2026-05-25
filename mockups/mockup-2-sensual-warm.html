@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RRX2 — Sensual Warm</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ===== DESIGN SYSTEM — SENSUAL WARM ===== */
+  :root {
+    /* Background */
+    --bg-base:     #0a0612;
+    --bg-card:     #120b1e;
+    --bg-elevated: #1a1028;
+    --bg-frosted:  rgba(26,16,40,0.85);
+
+    /* Rose Gold Palette */
+    --rose:        #c2607a;
+    --rose-light:  #da8fa2;
+    --rose-pale:   rgba(194,96,122,0.12);
+    --rose-glow:   rgba(194,96,122,0.35);
+
+    /* Warm Accents */
+    --peach:       #e8956d;
+    --honey:       #d4916a;
+    --cream:       #f5e6d3;
+    --ivory:       #ede0d0;
+    --burgundy:    #7a1c3a;
+
+    /* Text */
+    --text-bright: #f5e6d3;
+    --text-mid:    #b09280;
+    --text-dim:    #6b4a5a;
+
+    /* Borders */
+    --border-soft: rgba(194,96,122,0.18);
+    --border-warm: rgba(212,145,106,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    font-family: 'Heebo', sans-serif;
+    color: var(--text-bright);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Atmospheric background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 20% 10%, rgba(122,28,58,0.5) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 70% at 80% 90%, rgba(194,96,122,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 50% 50%, rgba(212,145,106,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Soft particle effect */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Ccircle cx='50' cy='80' r='1' fill='rgba(194,96,122,0.15)'/%3E%3Ccircle cx='150' cy='200' r='0.8' fill='rgba(212,145,106,0.1)'/%3E%3Ccircle cx='300' cy='120' r='1.2' fill='rgba(194,96,122,0.12)'/%3E%3Ccircle cx='250' cy='320' r='0.6' fill='rgba(212,145,106,0.08)'/%3E%3Ccircle cx='80' cy='350' r='1' fill='rgba(194,96,122,0.1)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  /* ===== PHONE FRAME ===== */
+  .phone-frame {
+    max-width: 390px;
+    margin: 40px auto;
+    background: var(--bg-card);
+    border-radius: 48px;
+    border: 1px solid rgba(194,96,122,0.2);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.03),
+      0 40px 100px rgba(0,0,0,0.7),
+      0 0 80px rgba(122,28,58,0.3);
+    position: relative;
+  }
+
+  .screen {
+    padding: 52px 22px 40px;
+    min-height: 844px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .exit-btn {
+    background: none;
+    border: 1px solid var(--border-soft);
+    color: var(--text-dim);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    padding: 7px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+    letter-spacing: 0.05em;
+  }
+  .exit-btn:hover {
+    border-color: var(--rose);
+    color: var(--rose-light);
+  }
+
+  .phase-block { text-align: left; }
+
+  .step-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+  }
+
+  .phase-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--rose-light);
+    letter-spacing: 0.05em;
+  }
+
+  .phase-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  /* ===== HEAT BAR ===== */
+  .heat-bar-wrap {
+    position: relative;
+  }
+
+  .heat-bar-track {
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .heat-bar-fill {
+    height: 100%;
+    width: 62%;
+    border-radius: 4px;
+    background: linear-gradient(90deg,
+      rgba(194,96,122,0.7) 0%,
+      var(--rose) 50%,
+      var(--peach) 100%
+    );
+    box-shadow: 0 0 8px var(--rose-glow);
+    animation: warm-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes warm-pulse {
+    0%, 100% { opacity: 0.85; }
+    50% { opacity: 1; box-shadow: 0 0 16px var(--rose-glow); }
+  }
+
+  .heat-phases {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .heat-phase {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    font-style: italic;
+  }
+  .heat-phase.active { color: var(--rose-light); }
+
+  /* ===== DRAW CARD ===== */
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-align: center;
+  }
+
+  .draw-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-stack {
+    position: relative;
+    width: 220px;
+    height: 310px;
+    cursor: pointer;
+  }
+
+  .card-ghost {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    border: 1px solid var(--border-soft);
+    background: linear-gradient(145deg, rgba(194,96,122,0.07), rgba(212,145,106,0.04));
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  .card-ghost:nth-child(1) { transform: rotate(-3.5deg) translateY(7px); opacity: 0.4; }
+  .card-ghost:nth-child(2) { transform: rotate(-1.5deg) translateY(3.5px); opacity: 0.65; }
+  .card-stack:hover .card-ghost:nth-child(1) { transform: rotate(-5deg) translateY(10px); }
+  .card-stack:hover .card-ghost:nth-child(2) { transform: rotate(-2.5deg) translateY(6px); }
+
+  .card-main {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #1a0f26 0%, #140c1e 100%);
+    border: 1px solid rgba(194,96,122,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    box-shadow:
+      0 20px 60px rgba(0,0,0,0.5),
+      0 0 50px rgba(122,28,58,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+
+  /* Rose petal decoration */
+  .card-main::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,96,122,0.2), transparent 70%);
+  }
+  .card-main::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,145,106,0.15), transparent 70%);
+  }
+
+  .card-stack:hover .card-main { transform: translateY(-8px); }
+  .card-stack:active .card-main { transform: translateY(-3px) scale(0.97); }
+
+  /* Inner border decoration */
+  .inner-border {
+    position: absolute;
+    inset: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(194,96,122,0.1);
+    pointer-events: none;
+  }
+
+  .draw-orb {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(194,96,122,0.5), rgba(122,28,58,0.3));
+    border: 1px solid rgba(194,96,122,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    animation: rose-float 5s ease-in-out infinite;
+    box-shadow: 0 0 30px rgba(194,96,122,0.25);
+  }
+
+  @keyframes rose-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-5px) rotate(2deg); }
+    66% { transform: translateY(-3px) rotate(-1deg); }
+  }
+
+  .draw-label {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--rose-light);
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .draw-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== GAME CARD ===== */
+  .game-card {
+    background: linear-gradient(160deg, #190e28 0%, #110920 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(194,96,122,0.28);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.025),
+      0 24px 64px rgba(0,0,0,0.6),
+      0 0 60px rgba(122,28,58,0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Top decoration */
+  .game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(194,96,122,0.6), rgba(212,145,106,0.4), transparent);
+  }
+
+  .card-header {
+    padding: 16px 20px 14px;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(194,96,122,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+  .role-badge.man {
+    background: rgba(100,130,220,0.15);
+    border: 1px solid rgba(100,130,220,0.3);
+    color: rgba(150,180,255,0.9);
+  }
+  .role-badge.woman {
+    background: rgba(194,96,122,0.18);
+    border: 1px solid rgba(194,96,122,0.4);
+    color: var(--rose-light);
+  }
+  .role-badge.both {
+    background: rgba(212,145,106,0.15);
+    border: 1px solid rgba(212,145,106,0.3);
+    color: rgba(232,180,150,0.9);
+  }
+
+  .card-type-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    font-style: italic;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-align: left;
+  }
+
+  .card-body {
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+  }
+
+  .icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,96,122,0.2), transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .icon-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(194,96,122,0.12);
+  }
+
+  .card-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-bright);
+    text-align: center;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+  }
+
+  .card-desc {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(194,96,122,0.12);
+    border-radius: 16px;
+    padding: 16px;
+    font-size: 13.5px;
+    color: var(--text-mid);
+    line-height: 1.9;
+    text-align: right;
+    font-weight: 300;
+  }
+
+  /* Secret box */
+  .secret-box {
+    position: relative;
+    background: linear-gradient(135deg, rgba(212,145,106,0.1), rgba(194,96,122,0.07));
+    border: 1px solid rgba(212,145,106,0.25);
+    border-radius: 16px;
+    padding: 16px;
+    overflow: hidden;
+  }
+  .secret-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,145,106,0.5), transparent);
+  }
+
+  .secret-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+  }
+  .secret-label span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    font-style: italic;
+    letter-spacing: 0.2em;
+    color: rgba(212,145,106,0.9);
+  }
+
+  .secret-text {
+    font-size: 12.5px;
+    color: rgba(245,230,211,0.7);
+    line-height: 1.75;
+    text-align: right;
+    font-weight: 300;
+  }
+
+  /* Buttons */
+  .btn-guide {
+    width: 100%;
+    padding: 14px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(194,96,122,0.2);
+    border-radius: 14px;
+    color: rgba(194,96,122,0.9);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-guide:hover {
+    background: rgba(194,96,122,0.1);
+    border-color: rgba(194,96,122,0.4);
+  }
+
+  .timer-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(194,96,122,0.3);
+    background: rgba(194,96,122,0.1);
+    color: var(--rose-light);
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 22px;
+    font-weight: 300;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.25s ease-out;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .timer-btn:hover {
+    background: rgba(194,96,122,0.18);
+    box-shadow: 0 0 24px rgba(194,96,122,0.2);
+  }
+  .timer-btn:active { transform: scale(0.98); }
+
+  .btn-swap {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    cursor: pointer;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: color 0.2s;
+    border-radius: 10px;
+    min-height: 44px;
+  }
+  .btn-swap:hover { color: var(--rose-light); }
+
+  .card-footer {
+    padding: 16px 20px 20px;
+    border-top: 1px solid rgba(194,96,122,0.1);
+  }
+
+  .btn-complete {
+    width: 100%;
+    padding: 17px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #a84d65 0%, var(--rose) 50%, #c2607a 100%);
+    border: none;
+    color: white;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
+    box-shadow:
+      0 4px 20px rgba(194,96,122,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-complete::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .btn-complete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(194,96,122,0.55);
+  }
+  .btn-complete:hover::before { opacity: 1; }
+  .btn-complete:active { transform: translateY(0) scale(0.98); }
+
+  /* Notes panel */
+  .notes {
+    max-width: 390px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
+  }
+  .notes-inner {
+    background: rgba(26,16,40,0.8);
+    border: 1px solid rgba(194,96,122,0.2);
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+  .notes-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--rose-light);
+    margin-bottom: 14px;
+  }
+  .notes-inner strong { color: var(--text-bright); }
+
+  .color-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--text-mid);
+  }
+  .chip-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="screen">
+
+    <!-- HEADER -->
+    <header class="header">
+      <button class="exit-btn" aria-label="יציאה">&#x2715;&ensp;יציאה</button>
+      <div class="phase-block" role="status" aria-live="polite">
+        <div class="step-label">שלב&nbsp;5&nbsp;/&nbsp;17</div>
+        <div class="phase-title">פאזה II — חום</div>
+        <div class="phase-sub">אוראלי ותשוקה</div>
+      </div>
+    </header>
+
+    <!-- HEAT BAR -->
+    <div class="heat-bar-wrap" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="עוצמת המסע">
+      <div class="heat-bar-track">
+        <div class="heat-bar-fill"></div>
+      </div>
+      <div class="heat-phases" aria-hidden="true">
+        <span class="heat-phase">חימום</span>
+        <span class="heat-phase active">חום</span>
+        <span class="heat-phase">שיא</span>
+      </div>
+    </div>
+
+    <!-- DRAW STATE -->
+    <p class="section-label">שלוף קלף להמשך המסע</p>
+
+    <div class="draw-area">
+      <div class="card-stack" role="button" aria-label="שלוף קלף" tabindex="0">
+        <div class="card-ghost"></div>
+        <div class="card-ghost"></div>
+        <div class="card-main">
+          <div class="inner-border" aria-hidden="true"></div>
+          <div class="draw-orb" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(194,96,122,0.9)" stroke-width="1.4" stroke-linecap="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+          <div class="draw-label">שלוף קלף</div>
+          <div class="draw-sub">הקש להמשך</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPENED CARD -->
+    <p class="section-label">קלף פתוח — טכניקה</p>
+
+    <div class="game-card" aria-label="קלף: טיפוח מלכותי">
+      <div class="card-header">
+        <div class="card-type-label">טכניקה / אוראלי</div>
+        <span class="role-badge man" aria-label="הוא מפנק">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          הוא מפנק
+        </span>
+      </div>
+
+      <div class="card-body">
+        <div class="card-icon" aria-hidden="true">
+          <div class="icon-wrap">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="rgba(194,96,122,0.85)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22c-4 0-7-3-7-7 0-2 .8-3.8 2-5"/>
+              <path d="M12 22c4 0 7-3 7-7 0-2-.8-3.8-2-5"/>
+              <path d="M12 3v4"/>
+              <circle cx="12" cy="10" r="2.5" fill="rgba(194,96,122,0.25)"/>
+            </svg>
+          </div>
+        </div>
+
+        <h2 class="card-title">טיפוח מלכותי</h2>
+
+        <div class="card-desc" dir="rtl">
+          התחל בנשיקות עדינות על הגוף. הידיים בתנועה רכה ורציפה,
+          כמו גשם חם. הקשב לנשימות שלה — הן ינחו אותך.
+        </div>
+
+        <div class="secret-box" aria-label="סוד מומחה">
+          <div class="secret-label">
+            <span>סוד מומחה</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(212,145,106,0.9)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="secret-text">
+            לחץ עדין יותר ממה שחושב. רוב האנשים לוחצים חזק מדי.
+            עדינות היא העוצמה האמיתית.
+          </p>
+        </div>
+
+        <button class="btn-guide" aria-label="מדריך מפורט">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          מדריך מלא
+        </button>
+
+        <button class="timer-btn" aria-label="הפעל טיימר 2:35" role="timer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="13" r="7"/><polyline points="12 10 12 13 14.5 13"/><path d="M9 1h6M12 1v3"/></svg>
+          2:35
+        </button>
+
+        <button class="btn-swap" aria-label="החלף קלף">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          לא מתאים? החלף קלף
+        </button>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-complete" aria-label="סמן כהושלם">
+          הושלם ✓
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DESIGN NOTES -->
+<div class="notes">
+  <div class="notes-inner">
+    <div class="notes-title">MOCKUP 2 — SENSUAL WARM</div>
+
+    <strong>פלטה (Charcoal-Plum + Rose Gold):</strong>
+    <div class="color-chips">
+      <div class="chip"><div class="chip-dot" style="background:#0a0612;border:1px solid #333;"></div>#0a0612 void</div>
+      <div class="chip"><div class="chip-dot" style="background:#7a1c3a;"></div>#7a1c3a burgundy</div>
+      <div class="chip"><div class="chip-dot" style="background:#c2607a;"></div>#c2607a rose</div>
+      <div class="chip"><div class="chip-dot" style="background:#e8956d;"></div>#e8956d peach</div>
+      <div class="chip"><div class="chip-dot" style="background:#f5e6d3;"></div>#f5e6d3 cream</div>
+    </div>
+
+    <strong>פונטים:</strong><br>
+    Frank Ruhl Libre — כותרות עבריות (אינטימי, אלגנטי)<br>
+    Cormorant Garamond — ממשק, תוויות, italic<br>
+    Heebo — גוף טקסט<br><br>
+
+    <strong>מה שונה מהנוכחי:</strong><br>
+    פלטה חמה במקום neon • פונטים סריפיים לאווירה • עיגול גדול יותר (24px) • אנימציות עדינות יותר • rose gold borders • atmospheric background עם gradients ורודים עמוקים
+
+  </div>
+</div>
+
+<style>
+  *:focus-visible {
+    outline: 2px solid var(--rose);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .heat-bar-fill, .draw-orb { animation: none; }
+    * { transition-duration: 0.01ms !important; }
+  }
+</style>
+
+</body>
+</html>

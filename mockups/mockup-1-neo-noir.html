@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RRX2 — Neo-Noir Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Orbitron:wght@400;600;800&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===== DESIGN SYSTEM ===== */
+  :root {
+    --bg-void:      #020205;
+    --bg-deep:      #08080f;
+    --bg-card:      #0d0d1a;
+    --bg-elevated:  #13132b;
+
+    --cyan:         oklch(75% 0.18 195);
+    --cyan-glow:    oklch(65% 0.22 195);
+    --fuchsia:      oklch(72% 0.28 310);
+    --fuchsia-glow: oklch(60% 0.32 310);
+    --crimson:      oklch(55% 0.22 25);
+    --crimson-glow: oklch(45% 0.28 25);
+    --gold:         oklch(78% 0.15 85);
+
+    --text-bright:  #f0f0ff;
+    --text-mid:     #9898bb;
+    --text-dim:     #4a4a72;
+    --border-faint: rgba(255,255,255,0.06);
+    --border-glow:  rgba(168,85,247,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-void);
+    font-family: 'Heebo', sans-serif;
+    color: var(--text-bright);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background atmosphere */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 20%, oklch(30% 0.15 310 / 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, oklch(25% 0.18 195 / 0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 50% 50%, oklch(10% 0.08 250 / 0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* ===== LAYOUT ===== */
+  .phone-frame {
+    max-width: 390px;
+    margin: 40px auto;
+    background: var(--bg-deep);
+    border-radius: 48px;
+    border: 1px solid var(--border-faint);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 40px 80px rgba(0,0,0,0.8),
+      0 0 100px oklch(30% 0.2 310 / 0.2);
+    position: relative;
+  }
+
+  .screen {
+    padding: 52px 24px 40px;
+    min-height: 844px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-faint);
+  }
+
+  .exit-btn {
+    background: none;
+    border: 1px solid var(--border-faint);
+    color: var(--text-dim);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+  .exit-btn:hover {
+    border-color: rgba(255,255,255,0.15);
+    color: var(--text-mid);
+  }
+
+  .phase-block {
+    text-align: left;
+  }
+  .step-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  .phase-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--fuchsia), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.08em;
+  }
+  .phase-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+  }
+
+  /* ===== HEAT BAR ===== */
+  .heat-bar-wrap {
+    position: relative;
+  }
+  .heat-bar-track {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: visible;
+    position: relative;
+  }
+  .heat-bar-fill {
+    height: 100%;
+    width: 62%;
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+      var(--cyan) 0%,
+      var(--fuchsia) 55%,
+      var(--crimson) 100%
+    );
+    position: relative;
+    box-shadow: 0 0 12px var(--fuchsia-glow), 0 0 24px oklch(60% 0.28 310 / 0.4);
+    animation: heat-pulse 3s ease-in-out infinite;
+  }
+  .heat-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--fuchsia);
+    box-shadow: 0 0 12px var(--fuchsia-glow), 0 0 24px var(--fuchsia-glow);
+  }
+
+  @keyframes heat-pulse {
+    0%, 100% { box-shadow: 0 0 12px var(--fuchsia-glow), 0 0 24px oklch(60% 0.28 310 / 0.4); }
+    50% { box-shadow: 0 0 20px var(--fuchsia-glow), 0 0 40px oklch(60% 0.28 310 / 0.6); }
+  }
+
+  /* Phase markers */
+  .heat-markers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding: 0 2px;
+  }
+  .heat-marker {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+  }
+  .heat-marker.active { color: var(--fuchsia); }
+
+  /* ===== DRAW CARD (hidden state) ===== */
+  .draw-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .card-stack {
+    position: relative;
+    width: 220px;
+    height: 320px;
+    cursor: pointer;
+  }
+
+  .card-ghost {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 1px solid rgba(168,85,247,0.2);
+    background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(34,211,238,0.04));
+    transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+  }
+  .card-ghost:nth-child(1) { transform: rotate(-4deg) translateY(8px); opacity: 0.35; }
+  .card-ghost:nth-child(2) { transform: rotate(-2deg) translateY(4px); opacity: 0.55; }
+  .card-stack:hover .card-ghost:nth-child(1) { transform: rotate(-6deg) translateY(12px); }
+  .card-stack:hover .card-ghost:nth-child(2) { transform: rotate(-3deg) translateY(8px); }
+
+  .card-main {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #0d0d22 0%, #0a0a1a 100%);
+    border: 1px solid rgba(168,85,247,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
+    box-shadow:
+      0 20px 60px rgba(0,0,0,0.6),
+      0 0 40px oklch(35% 0.25 310 / 0.2),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  .card-stack:hover .card-main { transform: translateY(-6px); }
+  .card-stack:active .card-main { transform: translateY(-2px) scale(0.98); }
+
+  /* Decorative lines on draw card */
+  .card-main::before {
+    content: '';
+    position: absolute;
+    inset: 24px;
+    border-radius: 14px;
+    border: 1px solid rgba(168,85,247,0.12);
+  }
+  .card-main::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, oklch(45% 0.25 310 / 0.15) 0%, transparent 70%);
+  }
+
+  .draw-orb {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, oklch(60% 0.28 310 / 0.4), oklch(40% 0.2 195 / 0.2));
+    border: 1px solid rgba(168,85,247,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    animation: orb-float 4s ease-in-out infinite;
+  }
+
+  @keyframes orb-float {
+    0%, 100% { transform: translateY(0); box-shadow: 0 0 20px oklch(55% 0.3 310 / 0.3); }
+    50% { transform: translateY(-6px); box-shadow: 0 8px 30px oklch(55% 0.3 310 / 0.5); }
+  }
+
+  .draw-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: oklch(72% 0.28 310);
+    position: relative;
+    z-index: 1;
+  }
+  .draw-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== OPENED CARD ===== */
+  .game-card {
+    background: linear-gradient(145deg, #0e0e20 0%, #0a0a18 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(232,121,249,0.3);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.03),
+      0 24px 64px rgba(0,0,0,0.7),
+      0 0 60px oklch(40% 0.28 310 / 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-header {
+    padding: 14px 18px 12px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .role-badge.man { background: rgba(59,130,246,0.2); border: 1px solid rgba(59,130,246,0.4); color: #93c5fd; }
+  .role-badge.woman { background: rgba(244,114,182,0.2); border: 1px solid rgba(244,114,182,0.4); color: #f9a8d4; }
+  .role-badge.both { background: rgba(168,85,247,0.2); border: 1px solid rgba(168,85,247,0.4); color: #c084fc; }
+
+  .card-type-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .card-body {
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    max-height: 500px;
+  }
+
+  /* SVG Icon area */
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+  }
+  .icon-glow {
+    width: 48px;
+    height: 48px;
+    position: relative;
+  }
+  .icon-glow::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, oklch(60% 0.28 310 / 0.2) 0%, transparent 70%);
+  }
+  .icon-glow svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .card-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-bright);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-faint);
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    text-align: right;
+  }
+
+  /* Secret box */
+  .secret-box {
+    background: linear-gradient(135deg, rgba(234,179,8,0.08), rgba(234,179,8,0.04));
+    border: 1px solid rgba(234,179,8,0.25);
+    border-radius: 12px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .secret-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(234,179,8,0.6), transparent);
+  }
+  .secret-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    justify-content: flex-end;
+  }
+  .secret-label span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: rgba(234,179,8,0.9);
+    text-transform: uppercase;
+  }
+  .secret-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    text-align: right;
+  }
+
+  /* Buttons */
+  .btn-guide {
+    width: 100%;
+    padding: 13px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    color: var(--cyan);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-guide:hover {
+    background: rgba(34,211,238,0.07);
+    border-color: rgba(34,211,238,0.25);
+  }
+
+  .timer-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(232,121,249,0.3);
+    background: rgba(232,121,249,0.08);
+    color: var(--fuchsia);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s ease-out;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer-btn:hover {
+    background: rgba(232,121,249,0.14);
+    box-shadow: 0 0 20px rgba(232,121,249,0.2);
+  }
+
+  .btn-swap {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 11px;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: color 0.2s;
+    border-radius: 6px;
+    border: 1px solid transparent;
+  }
+  .btn-swap:hover {
+    color: var(--text-mid);
+    border-color: var(--border-faint);
+  }
+
+  .card-footer {
+    padding: 16px 18px;
+    border-top: 1px solid var(--border-faint);
+  }
+
+  .btn-complete {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, oklch(55% 0.28 310) 0%, oklch(45% 0.22 280) 100%);
+    border: none;
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
+    box-shadow: 0 4px 20px oklch(50% 0.28 310 / 0.4);
+  }
+  .btn-complete:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px oklch(50% 0.28 310 / 0.55);
+  }
+  .btn-complete:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* ===== SECTION LABEL ===== */
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 24px 0 4px;
+    position: relative;
+  }
+  .section-label::before,
+  .section-label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 1px;
+    background: var(--border-faint);
+  }
+  .section-label::before { right: calc(50% + 60px); }
+  .section-label::after { left: calc(50% + 60px); }
+
+  /* Separator */
+  .sep { height: 1px; background: var(--border-faint); margin: 12px 0; }
+
+  /* ===== ACCESSIBILITY LABEL ===== */
+  .a11y-note {
+    background: rgba(234,179,8,0.08);
+    border: 1px solid rgba(234,179,8,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.7);
+    text-align: right;
+    direction: rtl;
+  }
+  .a11y-note strong { color: rgba(234,179,8,0.9); }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 20px 0;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--text-mid);
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="screen">
+
+    <!-- HEADER -->
+    <header class="header">
+      <button class="exit-btn" aria-label="יציאה מהמסע">&#x2715;&nbsp;EXIT</button>
+      <div class="phase-block" role="status" aria-live="polite">
+        <div class="step-label">STEP 5 / 17</div>
+        <div class="phase-title">PHASE II: HEAT</div>
+        <div class="phase-sub">אוראלי ותשוקה</div>
+      </div>
+    </header>
+
+    <!-- HEAT BAR -->
+    <div class="heat-bar-wrap" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="התקדמות המסע">
+      <div class="heat-bar-track">
+        <div class="heat-bar-fill"></div>
+      </div>
+      <div class="heat-markers" aria-hidden="true">
+        <span class="heat-marker">FOREPLAY</span>
+        <span class="heat-marker active">HEAT</span>
+        <span class="heat-marker">POSITIONS</span>
+      </div>
+    </div>
+
+    <!-- SECTION: DRAW STATE -->
+    <p class="section-label">מצב המתנה — קלף לשליפה</p>
+
+    <div class="draw-area">
+      <div class="card-stack" role="button" aria-label="שלוף קלף" tabindex="0">
+        <div class="card-ghost"></div>
+        <div class="card-ghost"></div>
+        <div class="card-main">
+          <div class="draw-orb" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="oklch(72% 0.28 310)" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="draw-label">DRAW CARD</div>
+          <div class="draw-sub">הקש לקבלת המשימה</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: OPENED CARD -->
+    <p class="section-label">קלף פתוח — TECHNIQUE</p>
+
+    <div class="game-card" aria-label="קלף משחק: טיפוח מלכותי">
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="card-type-label">TECHNIQUE&nbsp;//&nbsp;oral</div>
+        <span class="role-badge man" aria-label="הוא מפנק">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          הוא מפנק
+        </span>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="card-icon" aria-hidden="true">
+          <div class="icon-glow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="oklch(72% 0.28 310)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22c-4 0-7-3-7-7 0-2 .8-3.8 2-5"/>
+              <path d="M12 22c4 0 7-3 7-7 0-2-.8-3.8-2-5"/>
+              <path d="M12 3v4M9 6l3-3 3 3"/>
+              <circle cx="12" cy="11" r="2" fill="oklch(72% 0.28 310)" fill-opacity="0.3"/>
+            </svg>
+          </div>
+        </div>
+
+        <h2 class="card-title">טיפוח מלכותי</h2>
+
+        <div class="card-desc" dir="rtl">
+          התחל עם נשיקות עדינות על הגוף. הידיים שלך תמיד בתנועה עדינה,
+          כמו גשם קליל. הקשב לנשימות שלה — הן המצפן שלך.
+        </div>
+
+        <div class="secret-box" aria-label="טיפ סודי">
+          <div class="secret-label">
+            <span>סוד</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(234,179,8,0.9)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="secret-text">
+            לחץ עדין יותר ממה שחושב. ה-80% מהאנשים לוחצים חזק מדי.
+            עדינות = עוצמה בשפה הזו.
+          </p>
+        </div>
+
+        <button class="btn-guide" aria-label="פתח מדריך מפורט">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          מדריך מלא
+        </button>
+
+        <button class="timer-btn" aria-label="הפעל טיימר 2:35" role="timer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="7"/><polyline points="12 10 12 13 14.5 13"/><path d="M9 1h6M12 1v3"/></svg>
+          2:35
+        </button>
+
+        <button class="btn-swap" aria-label="החלף קלף">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          לא מתאים? החלף
+        </button>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer">
+        <button class="btn-complete" aria-label="סמן קלף כהושלם">
+          הושלם ✓
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /screen -->
+</div><!-- /phone-frame -->
+
+<!-- DESIGN NOTES PANEL -->
+<div style="max-width:390px;margin:24px auto 60px;padding:0 20px;">
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:20px;font-size:12px;color:#9898bb;line-height:1.8;">
+    <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:0.2em;color:oklch(72% 0.28 310);margin-bottom:12px;">MOCKUP 1 — NEO-NOIR PREMIUM</div>
+
+    <div style="margin-bottom:12px;">
+      <strong style="color:#f0f0ff;">פלטה:</strong><br>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:oklch(75% 0.18 195);"></div>Cyan #22d3ee</div>
+        <div class="legend-item"><div class="legend-dot" style="background:oklch(72% 0.28 310);"></div>Fuchsia #e879f9</div>
+        <div class="legend-item"><div class="legend-dot" style="background:oklch(55% 0.22 25);"></div>Crimson #dc2626</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(234,179,8,0.9);"></div>Gold #eab308</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#0d0d1a;border:1px solid #333;"></div>Void bg</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:10px;"><strong style="color:#f0f0ff;">שיפורים על הנוכחי:</strong><br>
+    OKLCH במקום hex → צבעים עשירים יותר • grain texture מחישה יוקרה • heat bar עם glow pulse • card stack אנימציה בhover • כפתור complete עם gradient אמיתי • space grotesk לממשק, orbitron רק לכותרות</div>
+
+    <div><strong style="color:#f0f0ff;">נגישות (WCAG AA):</strong><br>
+    aria-label על כל אלמנט אינטראקטיבי • role="progressbar" לheat bar • role="status" aria-live לphase • role="timer" לטיימר • tabindex על draw card • contrast: טקסט בהיר על רקע כהה ≥7:1 • focus rings עם outline</div>
+  </div>
+</div>
+
+<style>
+  /* Focus styles for keyboard navigation */
+  *:focus-visible {
+    outline: 2px solid oklch(72% 0.28 310);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .heat-bar-fill { animation: none; }
+    .draw-orb { animation: none; }
+    .card-stack:hover .card-main { transform: none; }
+    .card-stack:hover .card-ghost { transform: none; }
+    * { transition-duration: 0.01ms !important; }
+  }
+
+  /* Touch targets */
+  .btn-swap {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .exit-btn {
+    min-height: 44px;
+  }
+</style>
+
+</body>
+</html>

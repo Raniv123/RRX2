@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option A — Midnight Violet</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#07020e;--ink2:#0e0518;--rose:#ff3d8a;--rose-soft:#ff7eb6;--violet:#a855f7;--violet-deep:#7c3aed;--azure:#5b8cff;--azure-soft:#8fb3ff;--bone:#f5ecff;--mute:rgba(245,236,255,0.55);--hair:rgba(245,236,255,0.14)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--ink);color:var(--bone);font-family:'Heebo',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(70% 50% at 15% 12%,rgba(168,85,247,0.22) 0%,transparent 60%),radial-gradient(60% 50% at 85% 22%,rgba(255,61,138,0.18) 0%,transparent 65%),radial-gradient(80% 60% at 50% 95%,rgba(91,140,255,0.20) 0%,transparent 65%);pointer-events:none;z-index:0;animation:drift 22s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(2%,-1%,0) scale(1.04)}}
+.wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px}
+@media(max-width:1100px){.wrap{grid-template-columns:1fr;max-width:420px}}
+.hdr{grid-column:1/-1;text-align:center;margin-bottom:8px}
+.hdr h1{font-family:'Playfair Display',serif;font-size:48px;font-weight:600;letter-spacing:-0.02em;background:linear-gradient(90deg,var(--bone),var(--rose-soft) 30%,#d8b4fe 60%,var(--azure-soft));background-clip:text;-webkit-background-clip:text;color:transparent}
+.hdr p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--mute);font-size:20px;margin-top:6px}
+.hdr .pal{display:flex;justify-content:center;gap:10px;margin-top:18px}
+.hdr .pal span{width:36px;height:36px;border-radius:9999px;border:1px solid var(--hair)}
+.font-d{font-family:'Playfair Display',serif;font-weight:600;letter-spacing:-0.02em}
+.font-i{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400}
+.font-eb{font-weight:500;letter-spacing:0.28em;text-transform:uppercase;font-size:10px}
+.glass{background:linear-gradient(160deg,rgba(245,236,255,0.04),rgba(245,236,255,0.015));backdrop-filter:blur(18px) saturate(140%);border:1px solid var(--hair);border-radius:28px;padding:32px}
+.screen{display:flex;flex-direction:column;min-height:600px;padding:32px 24px;border-radius:32px;background:linear-gradient(160deg,rgba(14,5,24,0.5),rgba(22,10,38,0.35));border:1px solid var(--hair);box-shadow:0 30px 80px -20px rgba(0,0,0,0.6)}
+.scr-lbl{font-family:'Heebo';font-weight:500;letter-spacing:0.28em;text-transform:uppercase;font-size:9px;color:var(--mute);text-align:center;margin-bottom:24px}
+/* LOGIN */
+.login{align-items:center;justify-content:center;text-align:center}
+.login .sub{font-family:'Cormorant Garamond';font-style:italic;color:var(--mute);font-size:16px;margin-bottom:10px}
+.login h2{font-family:'Playfair Display';font-size:56px;font-weight:600;letter-spacing:-0.02em;line-height:0.95;background:linear-gradient(90deg,var(--bone),var(--rose-soft) 30%,#d8b4fe 60%,var(--azure-soft));background-clip:text;-webkit-background-clip:text;color:transparent}
+.login .ebr{font-weight:500;letter-spacing:0.28em;text-transform:uppercase;font-size:10px;color:var(--mute);margin:6px 0 30px}
+.pin{width:240px;padding:18px 16px;background:rgba(245,236,255,0.04);border:1px solid var(--hair);border-radius:24px;text-align:center;font-family:'Playfair Display';font-size:30px;letter-spacing:0.7em;color:var(--bone);margin-bottom:20px}
+.btn{padding:16px 28px;border-radius:9999px;border:none;color:#fff;font-family:'Heebo';font-weight:600;letter-spacing:0.12em;font-size:14px;cursor:pointer;background:linear-gradient(135deg,var(--violet-deep) 0%,var(--rose) 55%,var(--violet-deep) 100%);background-size:200% 200%;box-shadow:inset 0 1px 0 rgba(255,255,255,0.22),0 14px 40px -10px rgba(255,61,138,0.55),0 8px 24px -8px rgba(124,58,237,0.45);transition:all 0.25s ease;width:240px}
+.btn:hover{background-position:100% 0;transform:translateY(-1px)}
+/* MENU */
+.menu .ebr-top{font-weight:500;letter-spacing:0.28em;text-transform:uppercase;font-size:10px;color:var(--mute);margin-bottom:6px}
+.menu h2{font-family:'Playfair Display';font-size:36px;font-weight:600;line-height:1;margin-bottom:6px;background:linear-gradient(90deg,var(--bone),var(--rose-soft) 60%,#d8b4fe);background-clip:text;-webkit-background-clip:text;color:transparent}
+.menu .it{font-family:'Cormorant Garamond';font-style:italic;color:var(--mute);font-size:17px;margin-bottom:22px}
+.tile{background:linear-gradient(160deg,rgba(245,236,255,0.04),rgba(245,236,255,0.015));border:1px solid var(--hair);border-radius:24px;padding:20px;margin-bottom:14px;text-align:right;cursor:pointer;transition:transform 0.25s ease,box-shadow 0.25s ease}
+.tile:hover{transform:translateY(-2px)}
+.tile-big{padding:28px;border-color:rgba(255,61,138,0.35);box-shadow:0 14px 50px -16px rgba(255,61,138,0.45)}
+.tile-big:hover{box-shadow:0 18px 60px -16px rgba(255,61,138,0.65)}
+.tile-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.tile-2col .tile{margin:0}
+.t-eb{font-weight:500;letter-spacing:0.28em;text-transform:uppercase;font-size:9px;display:block;margin-bottom:6px}
+.t-h{font-family:'Playfair Display';font-size:28px;font-weight:600;color:var(--bone);line-height:1;display:block;margin-bottom:4px}
+.t-h-lg{font-size:42px}
+.t-i{font-family:'Cormorant Garamond';font-style:italic;font-size:15px;color:var(--mute);display:block;line-height:1.3}
+.t-rose{border-color:rgba(255,61,138,0.30);box-shadow:0 0 0 1px rgba(255,61,138,0.15),0 14px 40px -16px rgba(255,61,138,0.40)}
+.t-rose .t-eb{color:var(--rose-soft)}
+.t-violet{border-color:rgba(168,85,247,0.30);box-shadow:0 0 0 1px rgba(168,85,247,0.15),0 14px 40px -16px rgba(168,85,247,0.40)}
+.t-violet .t-eb{color:#d8b4fe}
+.t-azure{border-color:rgba(91,140,255,0.30);box-shadow:0 0 0 1px rgba(91,140,255,0.15),0 14px 40px -16px rgba(91,140,255,0.40)}
+.t-azure .t-eb{color:var(--azure-soft)}
+.t-bone .t-eb{color:var(--mute)}
+/* CARD */
+.cardbox{align-items:center;justify-content:flex-start}
+.heat{width:100%;margin-bottom:18px}
+.heat .lbl{display:flex;justify-content:space-between;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;font-size:9px;color:var(--mute);margin-bottom:8px}
+.heat .lbl b{font-family:'Playfair Display';font-style:italic;font-weight:400;text-transform:none;letter-spacing:0;color:var(--rose-soft);font-size:14px}
+.heat .track{height:3px;background:rgba(245,236,255,0.10);border-radius:9999px;overflow:hidden;position:relative}
+.heat .fill{position:absolute;inset:0;width:62%;background:linear-gradient(90deg,var(--azure),var(--violet),var(--rose));box-shadow:0 0 12px rgba(255,61,138,0.55)}
+.card{width:100%;max-width:340px;background:linear-gradient(160deg,rgba(22,10,38,0.85),rgba(14,5,24,0.95));border:1px solid var(--hair);border-radius:28px;padding:24px;text-align:center;box-shadow:0 0 0 1px rgba(255,61,138,0.20),0 30px 80px -20px rgba(168,85,247,0.55)}
+.card-eb{font-weight:500;letter-spacing:0.28em;text-transform:uppercase;font-size:9px;color:var(--rose-soft);margin-bottom:8px}
+.card-it{font-family:'Cormorant Garamond';font-style:italic;font-size:14px;color:var(--mute);margin-bottom:18px}
+.card-h{font-family:'Playfair Display';font-size:32px;font-weight:600;color:var(--bone);line-height:1.1;margin-bottom:14px}
+.card-desc{color:var(--bone);font-size:15px;line-height:1.6;background:rgba(245,236,255,0.03);border:1px solid var(--hair);border-radius:18px;padding:14px;margin-bottom:14px;text-align:right}
+.secret{background:linear-gradient(135deg,rgba(255,61,138,0.10),rgba(168,85,247,0.10));border:1px solid rgba(255,61,138,0.30);border-radius:18px;padding:14px;margin-bottom:14px;text-align:right}
+.secret .s-eb{font-weight:500;letter-spacing:0.28em;text-transform:uppercase;font-size:8px;color:var(--rose-soft);margin-bottom:4px}
+.secret .s-t{font-family:'Cormorant Garamond';font-style:italic;font-size:14px;color:var(--bone);line-height:1.5}
+.timer{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border:1px solid var(--hair);border-radius:9999px;color:var(--bone);font-family:'Playfair Display';font-size:24px;font-weight:600;letter-spacing:0.05em;margin-bottom:14px;background:rgba(245,236,255,0.03)}
+.btn-card{padding:16px 28px;border-radius:9999px;border:none;color:#fff;font-family:'Heebo';font-weight:600;letter-spacing:0.12em;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--violet-deep) 0%,var(--rose) 55%,var(--violet-deep) 100%);background-size:200% 200%;box-shadow:inset 0 1px 0 rgba(255,255,255,0.22),0 14px 40px -10px rgba(255,61,138,0.55);width:100%}
+.swap{font-family:'Cormorant Garamond';font-style:italic;color:var(--mute);font-size:13px;margin-top:12px;background:none;border:none;cursor:pointer}
+.swap:hover{color:var(--bone)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <h1>Option A · Midnight Violet</h1>
+    <p>שחור עמוק · סגול · ורוד · כחול · לבן</p>
+    <div class="pal">
+      <span style="background:#07020e"></span>
+      <span style="background:#7c3aed"></span>
+      <span style="background:#a855f7"></span>
+      <span style="background:#ff3d8a"></span>
+      <span style="background:#5b8cff"></span>
+      <span style="background:#f5ecff"></span>
+    </div>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="screen login">
+    <div class="scr-lbl">Screen · Login</div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div class="sub">בין שניכם</div>
+      <h2>INTIMACY</h2>
+      <div class="ebr">A PRIVATE RITUAL</div>
+      <input class="pin" type="password" value="****" readonly>
+      <button class="btn">הכניסה שלנו</button>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <div class="screen menu">
+    <div class="scr-lbl">Screen · Menu</div>
+    <div class="ebr-top">A PRIVATE RITUAL</div>
+    <h2>הערב שלנו</h2>
+    <div class="it">בחרו איך מתחילים — אין דרך לא נכונה.</div>
+    <div class="tile tile-big t-rose">
+      <span class="t-eb">THE MAIN RITUAL</span>
+      <span class="t-h t-h-lg">המסע</span>
+      <span class="t-i">מ-foreplay עד שיא — שבעה־עשר צעדים</span>
+    </div>
+    <div class="tile-2col">
+      <div class="tile t-violet">
+        <span class="t-eb">ROLEPLAY</span>
+        <span class="t-h">תרחישים</span>
+        <span class="t-i">דמויות וכללים</span>
+      </div>
+      <div class="tile t-azure">
+        <span class="t-eb">CHANCE</span>
+        <span class="t-h">הקוביה</span>
+        <span class="t-i">אקראי וחד</span>
+      </div>
+    </div>
+    <div class="tile t-bone">
+      <span class="t-eb">INNER CIRCLE</span>
+      <span class="t-h">הסודות</span>
+      <span class="t-i">מה לעשות כדי שתגמרו ביחד</span>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="screen cardbox">
+    <div class="scr-lbl">Screen · Card</div>
+    <div class="heat">
+      <div class="lbl"><span>STEP 11 / 17</span><b>positions · phase iv</b></div>
+      <div class="track"><div class="fill"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-eb">TECHNIQUE · WOMAN</div>
+      <div class="card-it">היא יורדת</div>
+      <div class="card-h">הזמזום המרטיט</div>
+      <div class="card-desc">הכניסי את האיבר לפה. במקום לזוז, תתחילי לזמזם בעוצמה.</div>
+      <div class="secret">
+        <div class="s-eb">SECRET</div>
+        <div class="s-t">הוויברציה של מיתרי הקול עוברת ישר לקצות העצבים הרגישים בכיפה.</div>
+      </div>
+      <div class="timer">⏱  1:20</div>
+      <button class="btn-card">הושלם ·</button>
+      <button class="swap">לא מתאים? החליפי קלף</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
