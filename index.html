@@ -85,14 +85,31 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* === Typography classes — modern web (Vercel / Linear vibes) === */
-        .font-display { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 600; letter-spacing: -0.02em; }
-        .font-italic  { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-optical-sizing: auto; letter-spacing: 0.005em; }
-        .font-body    { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; }
+        /* === Typography classes — modern web (Vercel / Linear vibes) — NO italic, color-based accent === */
+        .font-display { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 600; letter-spacing: -0.015em; }
+        .font-body    { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 400; }
         .font-thin    { font-family: 'Plus Jakarta Sans', 'Assistant', sans-serif; font-weight: 200; letter-spacing: 0.005em; }
         .font-light   { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 300; }
         .font-mark    { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 300; letter-spacing: -0.01em; }
-        .font-eyebrow { font-family: 'Plus Jakarta Sans', 'Assistant', sans-serif; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; font-size: 0.68rem; }
+        .font-eyebrow { font-family: 'Plus Jakarta Sans', 'Assistant', sans-serif; font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; font-size: 0.68rem; }
+
+        /* Accent text — replaces italic. Pink-coral, regular weight, slightly looser */
+        .font-accent  { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 400; color: var(--rose); letter-spacing: 0.01em; }
+        .font-accent-soft { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 400; color: var(--rose-soft); letter-spacing: 0.01em; }
+        .font-accent-gold { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 400; color: var(--gold-soft); letter-spacing: 0.01em; }
+        /* Legacy compatibility — old .font-italic now maps to coral accent (no italic) */
+        .font-italic { font-family: 'Assistant', 'Plus Jakarta Sans', sans-serif; font-weight: 400; color: var(--rose); font-style: normal; letter-spacing: 0.01em; }
+
+        /* Sexy typographic glyphs */
+        .glyph-spark::before  { content: '✦'; margin-inline-end: 0.5em; color: var(--rose); }
+        .glyph-spark::after   { content: '✦'; margin-inline-start: 0.5em; color: var(--rose); }
+        .glyph-diamond::before { content: '◆'; margin-inline-end: 0.45em; color: var(--gold); font-size: 0.7em; vertical-align: 0.1em; }
+        .glyph-dot::before    { content: '·'; margin-inline-end: 0.45em; color: var(--rose-soft); font-weight: 700; }
+        .glyph-dash::before   { content: '⌇'; margin-inline-end: 0.45em; color: var(--rose); }
+        .divider-spark { display:flex; align-items:center; justify-content:center; gap:0.7em; color: var(--rose); font-size: 0.7rem; }
+        .divider-spark::before, .divider-spark::after {
+            content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,82,119,0.35), transparent);
+        }
 
         /* === GLASS — milled premium glass with depth === */
         .glass {
@@ -349,7 +366,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/RRX2/assets/index-Co8obWGm.js"></script>
+  <script type="module" crossorigin src="/RRX2/assets/index-Bc9c2R3s.js"></script>
 </head>
 <body class="bg-ritual">
     <div class="film-grain"></div>
