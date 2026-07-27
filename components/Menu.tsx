@@ -17,31 +17,31 @@ interface Tile {
 const TILES: Tile[] = [
     {
         screen: 'JOURNEY',
-        eyebrow: 'THE MAIN RITUAL',
+        eyebrow: '◆ THE MAIN RITUAL',
         title: 'המסע',
-        italic: 'מ-foreplay עד שיא — שבעה־עשר צעדים',
+        italic: 'מ-foreplay עד השיא · 19 צעדים',
         glow: 'rose',
         big: true,
     },
     {
         screen: 'SCENARIO',
-        eyebrow: 'ROLEPLAY',
+        eyebrow: '◆ ROLEPLAY',
         title: 'תרחישים',
-        italic: 'דמויות, כללים, מקומות',
+        italic: 'דמויות וכללים',
         glow: 'violet',
     },
     {
         screen: 'DICE',
-        eyebrow: 'CHANCE',
+        eyebrow: '◆ CHANCE',
         title: 'הקוביה',
         italic: 'אקראי וחד',
         glow: 'azure',
     },
     {
         screen: 'TIPS',
-        eyebrow: 'INNER CIRCLE',
+        eyebrow: '✦ INNER CIRCLE',
         title: 'הסודות',
-        italic: 'מה לעשות כדי שתגמרו ביחד',
+        italic: 'מה לעשות שתגמרו ביחד',
         glow: 'bone',
     },
 ];
@@ -69,7 +69,7 @@ const Tile = ({ tile, onClick }: { tile: Tile; onClick: () => void }) => {
                 <span className={`font-display text-bone leading-tight ${tile.big ? 'text-5xl' : 'text-3xl'}`}>
                     {tile.title}
                 </span>
-                <span className="font-italic text-mute text-base leading-snug">
+                <span className="font-accent-soft text-[15px] leading-snug">
                     {tile.italic}
                 </span>
             </div>
@@ -82,12 +82,12 @@ export const Menu: React.FC<MenuProps> = ({ onSelect }) => {
         <div className="flex flex-col w-full max-w-md mx-auto h-full pt-8 pb-10 px-1 animate-fade-up overflow-y-auto custom-scroll">
             {/* Header */}
             <div className="mb-8">
-                <p className="font-eyebrow text-mute text-[10px] mb-2">A PRIVATE RITUAL</p>
+                <div className="divider-spark w-20 mb-4"><span>✦</span></div>
                 <h1 className="font-display text-5xl leading-none mb-2 shimmer-text">
                     הערב שלנו
                 </h1>
-                <p className="font-italic text-mute text-lg">
-                    בחרו איך מתחילים — אין דרך לא נכונה.
+                <p className="font-accent text-lg">
+                    בחרו איך מתחילים · אין דרך לא נכונה
                 </p>
             </div>
 
